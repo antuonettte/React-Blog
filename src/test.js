@@ -1,1 +1,1 @@
-export let first_name = 'Tony';
+export let current_user = 'jswain@gmail.com';

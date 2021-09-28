@@ -1,34 +1,72 @@
 import React, { Component } from 'react'
+import { current_user } from '../test';
+// import axios from 'axios';
+
+
+
 
 export default class Home extends Component {
+
+    constructor(props){
+        super(props);
+        this.state={
+            items: [],
+            isLoaded: false
+        }
+    }
+
+    componentDidMount(){
+        
+        fetch('http://localhost:5000/api/posts')
+            .then(res => res.json())
+            .then( json => {
+                this.setState({
+                    isLoaded: true,
+                    items: json,
+                })
+            });
+
+    }
+
     render() {
 
-        let post = this.props.post
+        var { items, isLoaded } = this.state;
 
-        return (
-            <div>
-                <h3>Home</h3>
-                <hr />
+        if(!isLoaded){
+            return <div>Loading...</div>
+        }
+        else{
 
-                <ul className="list-group">
+            return (
+                <div>
+                    <h3>Home</h3>
+                    <hr />
 
-                    {post.map(p => (
+                    <ul className="list-group">
 
-                        <li class="list-group-item">
-                            <p>
-                                <a href="">{ p.post }</a>
-                            </p>
-                            <div>
-                                <span>
-                                    <cite>&mdash; { p.firstName + ' ' + p.lastName }</cite>
-                                </span>
+                        { items.map( p => (
 
-                            </div>
-                        </li>
-                    ))}
+                            <li class="list-group-item">
+                                <p>
+                                    {p.body}
+                                </p>
+                                <div>
+                                    <span>
+                                        <cite>&mdash; {p.user.first_name + ' ' + p.user.last_name}</cite>
+                                    </span>
 
-                </ul>
-            </div>
-        )
+                                </div>
+                            </li>
+                            
+                        ) ) }
+
+                        
+
+                    </ul>
+                </div>
+            )
+        }
+
+        
     }
 }

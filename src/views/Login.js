@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 
-export default class Login extends Component {
-
-    render() {
-        return (
+export const Login = (props) => {
+    return (
+        <React.Fragment>
+            <h3>Login</h3>
+            <hr />
             <div class="row">
                 <div class="col-md-6 offset-md-3">
-                    <form action="" method="">
+                    <form action="" method="POST">
                         <div class="form-group">
                             <input type="text" class="form-control" name="email" placeholder="Email" />
                         </div>
@@ -25,6 +26,6 @@ export default class Login extends Component {
                     </form>
                 </div>
             </div>
-        )
-    }
+        </React.Fragment>
+    )
 }

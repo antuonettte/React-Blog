@@ -10,7 +10,7 @@ export const Post = (props) => {
             <p><Link to={`/blog/${p.id}`}>{p.body}</Link></p>
             <div>
                 <span>
-                    {/* <cite>&mdash; {p.user.first_name} {p.user.last_name}</cite> */}
+                    <cite>&mdash; {p.id}</cite>
                     <small className="float-right">{moment(p.dateCreated.toDate()).fromNow()}</small>
                 </span>
 

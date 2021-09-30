@@ -10,7 +10,7 @@ export const Shop = (props) => {
 
             <div class="card-deck">
 
-                {props.items.slice(1).map(item => (
+                {/* {props.items.slice(1).map(item => (
 
                     <div class="card mt-3">
                         <div class="card-header bg-light text-dark h6">
@@ -23,7 +23,7 @@ export const Shop = (props) => {
                         </div>
                     </div>
 
-                ))}
+                ))} */}
 
             </div>
 

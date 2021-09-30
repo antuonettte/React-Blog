@@ -1,81 +1,68 @@
-import React, { Component } from 'react'
-// import { current_user } from '../test';
-// import axios from 'axios';
+import { post } from 'jquery'
+import React, { Component, useContext } from 'react'
+import { Post } from '../components/Post'
+import { useAuth } from '../contexts/AuthContext'
+import { DataContext } from '../contexts/DataProvider'
+import firebase from '../firebase'
+import { NotAuthenticated } from './NotAuthenticated'
+
 
 export const Home = (props) => {
 
-        const handleSubmit = ( e ) => {
-            e.preventDefault();
-            alert( e.target.body.value );
+    const { currentUser } = useAuth();
 
-            for (const input of e.target) {
-                console.log(input.value);
-            }
-        }
+    const { providerInfo, getPosts, addPost} = useContext(DataContext)
+
+    const handleSubmit = ( e ) => {
+        e.preventDefault();
+        // alert( e.target.body.value );
+
+        const formData = {
+            body: e.target.body.value,
+            dateCreated: firebase.firestore.Timestamp.fromDate( new Date()),
+            dateUpdated: null,
+            userId: currentUser.id
+        };
+
+        addPost(formData);
+    }
+
 
 
     return (
         <React.Fragment>
-            <h3>
-                Home
-            </h3>
-            <hr />
+            {
+                !currentUser.loggedIn
+                    ?
+                    <NotAuthenticated/>
+                    :
+                    <React.Fragment>
+                        <h3>
+                            Home | Welcome, {currentUser.loggedIn ? currentUser.name : 'User'}
+                        </h3>
+                        <hr />
 
-            <form onSubmit={(e) => handleSubmit(e)}>
-                <div className="form-group">
-                    <div className="row">
-                        <div className="col-md-10">
-                            <input className="form-control" type="text" name='body' placeholder="Your blog post here..." />
-                        </div>
-                        <div className="col-md-2">
-                            <button className="btn btn-info btn-block" type="submit">Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                        <form onSubmit={(e) => handleSubmit(e)}>
+                            <div className="form-group">
+                                <div className="row">
+                                    <div className="col-md-10">
+                                        <input className="form-control" type="text" name='body' placeholder="Your blog post here..." />
+                                    </div>
+                                    <div className="col-md-2">
+                                        <button className="btn btn-info btn-block" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
 
-            <hr />
+                        <hr />
 
-            <ul className="list-group">
-                {props.posts.map(p => <Post p={p} key={p.id} />)}
-            </ul>
+                        <ul className="list-group">
+                            {providerInfo[0].map(p => <Post p={p} key={p.id} />)}
+                        </ul>
+                    </React.Fragment>
+            }
         </React.Fragment>
 
-        // <React.Fragment>
-        //     <h3>
-        //         Home
-        //     </h3>
-        //     <hr />
-
-        //     <form action="" method="POST">
-        //         <div className="form-group">
-        //             <div className="row">
-        //                 <div className="col-md-10">
-        //                     <input className="form-control" type="text" name='body' placeholder="Your blog post here..." />
-        //                 </div>
-        //                 <div className="col-md-2">
-        //                     <input className="btn btn-info btn-block" type="submit" value="Post" />
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </form>
-
-        //     <hr />
-
-        //     <ul className="list-group">
-        //         {props.posts.map(p => (
-        //             <li key={p.id} className="list-group-item">
-        //                 <p><Link to={`/blog/${p.id}`}>{p.body}</Link></p>
-        //                 <div>
-        //                     <span>
-        //                         <cite>&mdash; {p.user.first_name} {p.user.last_name}</cite>
-        //                         <small className="float-right">{moment(p.date_created).fromNow()}</small>
-        //                     </span>
-
-        //                 </div>
-        //             </li>
-        //         ))}
-        //     </ul>
-        // </React.Fragment>
     )
 }

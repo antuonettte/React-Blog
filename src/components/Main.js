@@ -8,8 +8,9 @@ import { Login } from '../views/Login'
 import { Register } from '../views/Register'
 import { Profile } from '../views/Profile'
 import { Shop } from '../views/Shop'
-import {BlogSingle} from '../views/BlogSingle'
+import { BlogSingle } from '../views/BlogSingle'
 import { Navbar } from './Navbar'
+import { Cart } from './Cart'
 
 export const Main = (props) => {
     return (
@@ -22,13 +23,13 @@ export const Main = (props) => {
                 {/* Switch is used to switch render templates, Route is each Template, and Exact is required to make the path pattern exact not proximate */}
                 <Switch>
                     {/* posts={posts}  */}
-                    <Route exact path='/' render={() => <Home  />} />
+                    <Route exact path='/' render={() => <Home />} />
                     <Route exact path='/about' render={() => <About />} />
                     <Route exact path='/contact' render={() => <Contact />} />
                     {/* <Route exact path='/login' render={() => <Login />} /> */}
-                    {/* <Route exact path='/register' render={() => <Register />} /> */}
+                    <Route exact path='/shop/cart' render={() => <Cart />} />
                     <Route exact path='/auth/profile' render={() => <Profile />} />
-                    <Route exact path='/shop' render={() => <Shop items={props.items} />} />
+                    <Route exact path='/shop/products' render={() => <Shop items={props.items} />} />
                     {/* posts={posts}  */}
                     <Route exact path='/blog/:id' render={({ match }) => <BlogSingle  match={match} />} />
 

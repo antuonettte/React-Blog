@@ -1,6 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component, useContext } from 'react'
+import { Product } from '../components/Product';
+import { DataContext } from '../contexts/DataProvider';
 
 export const Shop = (props) => {
+
+    const { products } = useContext(DataContext);
+
+
     return (
         <React.Fragment>
             <p className="h3 pb-1">
@@ -8,22 +14,9 @@ export const Shop = (props) => {
             </p>
             <hr />
 
-            <div class="card-deck">
-
-                {/* {props.items.slice(1).map(item => (
-
-                    <div class="card mt-3">
-                        <div class="card-header bg-light text-dark h6">
-                            {item.name} <span className="float-right">{item.metadata.price}</span>
-                        </div>
-                        <img class="card-img-top" src={item.images[0]} alt="Image of product" />
-                        <div class="card-body bg-white">
-                            <a className="btn btn-success w-100" href=".">Add to card</a>
-                            <p class="card-text mt-2">{item.description}</p>
-                        </div>
-                    </div>
-
-                ))} */}
+            <div className="card-deck">
+                                                        {/* Key is a predefined value react components look for when they are duplicated */}
+                {products.map(item => <Product item={ item } key={ item.id } />)}
 
             </div>
 
